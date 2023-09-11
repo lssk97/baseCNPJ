@@ -21,7 +21,7 @@ lista_erros = list()
 for e in files:
     with open(e, encoding='latin-1') as f:
         print(f'processando arquivo {e}')
-        for z in f.readlines():
+        for z in f:
             x = z.split(";")
             cnpj = (x[0] + x[1] + x[2]).replace('"','')
             situacao_cadastral = x[5].replace('"','')
