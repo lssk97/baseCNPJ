@@ -1,0 +1,35 @@
+import wget
+import os
+import requests
+from bs4 import BeautifulSoup
+
+def receita():
+    os.chdir(r'C:\Users\ls33034\Documents\Scripts offline\virtual_envs\base_receita_federal\base_receita\arquivos')
+    os.mkdir('tmpdwnld')
+    os.chdir(r'C:\Users\ls33034\Documents\Scripts offline\virtual_envs\base_receita_federal\base_receita\arquivos\tmpdwnld')
+
+    url = 'https://dadosabertos.rfb.gov.br/CNPJ/Estabelecimentos'
+
+    for e in range(10):
+        f = url + f'{e}' + '.zip'
+        wget.download(f)
+
+    # depois de feito o download, extrair arquivos zipados e colocar no db, ao fim do processo, deletar a pasta e files!
+
+def abecs_cnae():
+    # fazer scraping para encontrar o link mais atualizado
+    web = 'https://abecs.org.br/consulta-mcc-individual'
+    response = requests.get(web, verify=False)
+    soup = BeautifulSoup(response.content, "html.parser")
+    # href="https://api.abecs.org.br/wp-content/uploads/
+
+
+def abecs_mcc():
+    #href="https://api.abecs.org.br/wp-content/uploads/
+    pass
+
+
+#############
+
+# url = 'https://api.abecs.org.br/wp-content/uploads/2023/07/Planilha-DE-PARA-com-MCCs-atualizado-julho-2023.xlsx'
+# url = 'https://api.abecs.org.br/wp-content/uploads/2023/08/31-08-2023.xlsx'
