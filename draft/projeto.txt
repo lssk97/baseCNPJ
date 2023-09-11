@@ -1,0 +1,49 @@
+passo 1:
+
+web scraping no site da receita federal todo dia para ver se houve atualização da database
+
+passo 2:
+
+web scraping para baixar o arquivo da abecs caso o da receita atualize
+
+passo 3: 
+
+web scraping para baixar a relação no primeiro dia útil da nova relação de CNPJs da abecs
+
+passo 4:
+
+compilar arquivos e criar databases com os seguintes campos: receita federal (cnpj, cnae primario, cnae secundario, status do cnpj) // de para abecs é tabela secundária //
+// tabela abecs de cnpjs é terceira tabela do DB//
+
+passo 5:
+
+criar GUI que possa consultar cnpj por raiz, por unidade, e por lote de cnpjs, por meio de sql
+
+passo 6:
+
+distribuir essa database
+
+
+-------------------------------------------------------------------------
+
+projeto 2:
+
+mesma coisa, só que com arquivos zipados com pyspark
+
+
+
+
+
+
+------------------------------------------------------------------------
+
+fazer scraping com beautiful soup
+usarw wget para baixar arquivos
+criar path temporário para os arquivos e baixar eles lá
+criar path para arquivos da abecs tbm
+unzip os arquivos da receita
+merge os arquivos da receita
+deletar os campos que não precisa usar
+pegar arquivo reduzido e criar uma database
+criar database relacionada com cnae-mcc abecs
+criar database relacionada com cnpj abecs(?)
