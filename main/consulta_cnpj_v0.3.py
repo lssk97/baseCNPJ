@@ -62,9 +62,9 @@ class Dados():
         except FileNotFoundError:
             # Se arquivo não existe, cria ele
             with open('config.txt', mode='w') as file:
-                file.write('receita=\n')
-                file.write('abecs=\n')
-                file.write('lista_cnpj=\n')
+                file.write('receita=nula\n')
+                file.write('abecs=nula\n')
+                file.write('lista_cnpj=nula\n')
                 file.write('permite_update=Sim')
                 file.close()
 
@@ -98,7 +98,7 @@ class Dados():
     def testa_database(self):
         pass
         '''Roda um SQL statement para cada tabela para verificar se ela está populada.
-        Se não estiver sobrescreve o config.txt para indicar o item como nulo'''
+        Se não estiver sobrescreve o config.txt para indicar o item como nula'''
 
         #connection = sqlite3.Connection(os.path.join(self.path_script,'database.db'))
         #cursor = connection.cursor()
@@ -125,9 +125,9 @@ class Dados():
         except FileNotFoundError:
             # Se o arquivo não existe, cria ele
             with open('config.txt', mode='w') as file:
-                file.write('receita=\n')
-                file.write('abecs=\n')
-                file.write('lista_cnpj=\n')
+                file.write('receita=nula\n')
+                file.write('abecs=nula\n')
+                file.write('lista_cnpj=nula\n')
                 file.write('permite_update=sim')
                 file.close()
 
@@ -155,6 +155,28 @@ class Dados():
 
             '''Verifica se todos os .zip já foram baixados, se não, baixa eles'''
 
+            print(f'''
+            --------------------------------------------------------------------------
+            Arquivos da receita devem ser atualizados!
+            A versão atual da base é {self.current_versions["receita"][0]},
+            Há uma nova versão: {self.current_versions["receita"][1]}
+            --------------------------------------------------------------------------
+            Se você não quiser atualizar a base, leia o procedimento no Confluence
+            --------------------------------------------------------------------------
+            Ou vá até a pasta da sua instalação e:
+            Abra a pasta 'dist' e procure pelo arquivo 'config.txt'
+            Substitua permite_update=sim
+            por
+            permite_update=nao
+            Abre novamente o programa e ele não irá atualizar
+            --------------------------------------------------------------------------
+            Para reativar as atualizações
+            no 'config.txt'
+            deixe como:
+            permite_update=sim
+            --------------------------------------------------------------------------x
+            ''')
+            
             # Usa replace pq não pode '/' em nome de arquivos!
             data_arquivos_receita = self.current_versions["receita"][1].replace("/","_")
             faltam_arquivos = True
@@ -250,6 +272,7 @@ class Dados():
                 read.close()
                 with open('config.txt', mode='w') as write:
                     write.writelines(atual)
+            print('Base da Receita Federal atualizada!')
         # Se a query com o CNPJ da Get falhar, não excluí os arquivos da pasta \temp, para rodar o processo outra vez           
         else:
             print('erro ao subir os arquivos do database')
@@ -267,6 +290,10 @@ class Dados():
             # Nome do excel é a última parte do link
             nome_excel = self.current_versions['lista_cnpj'][1].split('/')[-1]
             link = self.current_versions['lista_cnpj'][1]
+            
+            print(f'''Arquivos de CNPJ Determinados da ABECS receita deve ser atualizado!
+            A versão atual da base é {self.current_versions["lista_cnpj"][0]},
+            Há uma nova versão: {self.current_versions["lista_cnpj"][1]}''')
             
             # Se o arquivo ainda não foi baixado, faz download dele
             if not os.path.isfile(os.path.join(self.path_script, nome_excel)):
@@ -350,6 +377,7 @@ class Dados():
                 read.close()
                 with open('config.txt', mode='w') as write:
                     write.writelines(atual)
+            print('CNPJs Determinados atualizados!')
 
             
 
@@ -363,6 +391,10 @@ class Dados():
             # Nome do excel é a última parte do link
             nome_excel = self.current_versions['abecs'][1].split('/')[-1]
             link = self.current_versions['abecs'][1]
+            
+            print(f'''Arquivos de DE:PARA CNAE da ABECS receita deve ser atualizado!
+            A versão atual da base é {self.current_versions["abecs"][0]},
+            Há uma nova versão: {self.current_versions["abecs"][1]}''')
             
             # Se o arquivo ainda não foi baixado, faz download dele
             if not os.path.isfile(os.path.join(self.path_script, nome_excel)):
@@ -416,6 +448,7 @@ class Dados():
                 read.close()
                 with open('config.txt', mode='w') as write:
                     write.writelines(atual)
+            print('De para atualizado!')
         
 
 
@@ -425,7 +458,7 @@ class GUI():
 
     def __init__(self):
         self.layout_main_gui = []
-        self.layout_update_gui = []
+        self.update_gui = []
 
 
 
